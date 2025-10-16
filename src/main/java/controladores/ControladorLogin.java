@@ -60,7 +60,7 @@ public class ControladorLogin {
             }
 
 // chamada normal, com 2 parâmetros
-            boolean ok = serviçodeLogin.autenticar(login, senha);
+            boolean ok = serviçodeLogin.autenticarUsuario(login, senha);
 
             if (ok) {
                 alerta(Alert.AlertType.INFORMATION, "Login realizado com sucesso!");

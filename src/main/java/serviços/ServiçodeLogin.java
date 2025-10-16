@@ -13,22 +13,23 @@ public class ServiçodeLogin {
     /**
      * Autentica um usuário comum. Retorna o objeto Usuario se ok, ou null se falhar.
      */
-    public Usuario autenticarUsuario(String loginDigitado, String senhaDigitada) {
+    public Boolean autenticarUsuario(String loginDigitado, String senhaDigitada) {
         System.out.println("[Login] Tentando login de USUÁRIO = '" + loginDigitado + "'");
-        Usuario u = usuarioDao.buscarPorLogin(loginDigitado);
+        Usuario usuario = usuarioDao.buscarPorLogin(loginDigitado);
 
-        if (u == null) {
+        if (usuario == null) {
             System.out.println("[Login] Usuário NÃO encontrado para login='" + loginDigitado + "'");
             return null;
         }
 
-        String senhaBanco = (u.getSenha() == null) ? "" : u.getSenha().trim();
+        String senhaBanco = (usuario.getSenha() == null) ? "" : usuario.getSenha().trim();
         String senhaDigitadaTrim = senhaDigitada == null ? "" : senhaDigitada.trim();
 
         boolean ok = senhaBanco.equals(senhaDigitadaTrim);
         System.out.println("[Login] Resultado = " + ok);
 
-        return ok ? u : null;
+       // return ok ? usuario : null;
+        return ok ? true : false;
     }
 
     /**

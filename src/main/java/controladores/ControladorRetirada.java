@@ -12,42 +12,47 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.example.carrosuenp.Usuario;
+import org.example.carrosuenp.Veiculo;
 
 import java.util.List;
-
 
 public class ControladorRetirada {
 
     @FXML private ChoiceBox<Usuario> choiceUsuarios;
+    @FXML private ChoiceBox<Veiculo> choiceVeiculos;
     @FXML private Button voltar;
 
-    // ATENÇÃO: veja a nota sobre o nome da coleção mais abaixo
+    // ⚠️ Use exatamente os nomes das coleções como estão no Compass
     private final Dao<Usuario> usuarioDao = new Dao<>(Usuario.class, "Usuarios");
+    private final Dao<Veiculo> veiculoDao = new Dao<>(Veiculo.class, "Veiculos");
 
     @FXML
     public void initialize() {
-        try {
-            System.out.println("[ControladorRetiradas] initialize() chamado");
+        System.out.println("[ControladorRetiradas] initialize() chamado");
 
+        carregarUsuarios();
+        carregarVeiculos();
+    }
+
+    // ==== Carregamento de Usuários ====
+    private void carregarUsuarios() {
+        try {
             List<Usuario> usuarios = usuarioDao.listarTodos();
-            System.out.println("[ControladorRetiradas] qtd usuarios carregados = " + usuarios.size());
+            System.out.println("[ControladorRetiradas] qtd usuarios = " + usuarios.size());
             if (!usuarios.isEmpty()) {
                 usuarios.stream().limit(5).forEach(u ->
                         System.out.println(" - Usuario: nome=" + safe(u.getNome()) + ", login=" + safe(u.getLogin()))
                 );
             }
 
-            // Mostra algo mesmo se nome/login vierem nulos:
             choiceUsuarios.setConverter(new StringConverter<>() {
-                @Override
-                public String toString(Usuario u) {
+                @Override public String toString(Usuario u) {
                     if (u == null) return "";
                     String nome  = safe(u.getNome());
                     String login = safe(u.getLogin());
-                    if (!nome.isBlank())  return nome;
+                    if (!nome.isBlank())  return nome + (login.isBlank() ? "" : " (" + login + ")");
                     if (!login.isBlank()) return login;
-                    // como último recurso, .toString()
-                    return u.toString(); // personalize no POJO se quiser algo legível
+                    return "(usuário sem dados)";
                 }
                 @Override public Usuario fromString(String s) { return null; }
             });
@@ -56,18 +61,58 @@ public class ControladorRetirada {
             if (!choiceUsuarios.getItems().isEmpty()) {
                 choiceUsuarios.getSelectionModel().selectFirst();
             } else {
-                alerta("Nenhum usuário encontrado na coleção. Verifique o nome da coleção e o banco.");
+                alertaInfo("Nenhum usuário encontrado na coleção 'Usuarios'.");
             }
-
-            // DEBUG: teste rápido de UI (descomente para verificar se o ChoiceBox aparece algo)
-            // choiceUsuarios.getItems().add(new Usuario("testeLogin","Teste Nome"));
-            // choiceUsuarios.getSelectionModel().selectLast();
-
         } catch (Exception e) {
             e.printStackTrace();
-            alerta("Erro ao carregar usuários: " + e.getMessage());
+            alertaErro("Erro ao carregar usuários: " + e.getMessage());
         }
     }
+
+    // ==== Carregamento de Veículos ====
+    private void carregarVeiculos() {
+        try {
+            List<Veiculo> veiculos = veiculoDao.listarTodos();
+            System.out.println("[ControladorRetiradas] qtd veiculos = " + veiculos.size());
+            if (!veiculos.isEmpty()) {
+                veiculos.stream().limit(5).forEach(v ->
+                        System.out.println(" - Veiculo: placa=" + vSafe(v.getPlaca())
+                                + ", modelo=" + vSafe(v.getModelo())
+                                + ", marca=" + vSafe(v.getMarca()))
+                );
+            }
+
+            choiceVeiculos.setConverter(new StringConverter<>() {
+                @Override public String toString(Veiculo v) {
+                    if (v == null) return "";
+                    String placa  = vSafe(v.getPlaca());
+                    String modelo = vSafe(v.getModelo());
+                    String marca  = vSafe(v.getMarca());
+                    // ajuste como quiser: placa primeiro é comum
+                    if (!placa.isBlank() && (!modelo.isBlank() || !marca.isBlank())) {
+                        return placa + " - " + (marca.isBlank() ? "" : marca + " ")
+                                + (modelo.isBlank() ? "" : modelo);
+                    }
+                    if (!placa.isBlank()) return placa;
+                    if (!modelo.isBlank() || !marca.isBlank()) return (marca + " " + modelo).trim();
+                    return "(veículo sem dados)";
+                }
+                @Override public Veiculo fromString(String s) { return null; }
+            });
+
+            choiceVeiculos.setItems(FXCollections.observableArrayList(veiculos));
+            if (!choiceVeiculos.getItems().isEmpty()) {
+                choiceVeiculos.getSelectionModel().selectFirst();
+            } else {
+                alertaInfo("Nenhum veículo encontrado na coleção 'Veiculos'.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alertaErro("Erro ao carregar veículos: " + e.getMessage());
+        }
+    }
+
+    // ==== Navegação ====
     @FXML
     private void voltar() {
         try {
@@ -76,21 +121,25 @@ public class ControladorRetirada {
             stage.setScene(new Scene(root));
             stage.setTitle("Tela Inicial");
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText("Falha ao voltar para tela inicial");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            alertaErro("Falha ao voltar para tela inicial: " + e.getMessage());
         }
     }
 
+    // ==== Utils ====
     private String safe(String s) { return s == null ? "" : s; }
+    private String vSafe(String s) { return s == null ? "" : s.trim(); }
 
-    private void alerta(String msg) {
+    private void alertaInfo(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
+
+    private void alertaErro(String msg) {
+        Alert a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
