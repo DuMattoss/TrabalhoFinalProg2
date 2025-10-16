@@ -17,7 +17,7 @@ public class ControladorCadastroMotorista {
 
     @FXML private TextField camponome;
     @FXML private TextField campocnh;
-    @FXML private TextField campocodigo;  // <- STRING
+    @FXML private TextField campocodigo;
     @FXML private TextField camposetor;
 
     @FXML
@@ -25,7 +25,7 @@ public class ControladorCadastroMotorista {
         try {
             String nome   = camponome.getText().trim();
             String cnh    = campocnh.getText().trim();
-            String codigo = campocodigo.getText().trim(); // <- STRING
+            String codigo = campocodigo.getText().trim();
             String setor  = camposetor.getText().trim();
 
 
@@ -37,7 +37,7 @@ public class ControladorCadastroMotorista {
             Motorista m = new Motorista();
             m.setNome(nome);
             m.setCnh(cnh);
-            m.setCodigo(codigo); // <- STRING
+            m.setCodigo(codigo);
             m.setSetor(setor);
 
             CodecRegistry pojoRegistry = fromRegistries(

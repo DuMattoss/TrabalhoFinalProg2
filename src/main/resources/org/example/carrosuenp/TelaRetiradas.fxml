@@ -1,38 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorRetirada">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.6"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorRetirada"
+            prefHeight="400.0" prefWidth="600.0">
+
    <children>
-      <Label layoutX="190.0" layoutY="40.0" text="Retirada de veículos">
-         <font>
-            <Font name="Consolas Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="68.0" layoutY="102.0" text="Motorista">
-         <font>
-            <Font name="Consolas" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="73.0" layoutY="224.0" text="Veículo">
-         <font>
-            <Font name="Consolas" size="16.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="choiceUsuarios" layoutX="214.0" layoutY="99.0" prefHeight="25.0" prefWidth="174.0" />
-      <ChoiceBox layoutX="214.0" layoutY="220.0" prefHeight="25.0" prefWidth="174.0" />
-      <DatePicker layoutX="213.0" layoutY="143.0" />
-      <Label layoutX="68.0" layoutY="146.0" text="Data">
-         <font>
-            <Font name="Consolas" size="16.0" />
-         </font>
-      </Label>
-      <Button fx:id="voltar" layoutX="111.0" layoutY="302.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
-      <Button layoutX="385.0" layoutY="302.0" mnemonicParsing="false" text="Retirar" />
+      <Label layoutX="20.0" layoutY="20.0" text="Retirada de Veículos" />
+      <Label layoutX="20.0" layoutY="70.0" text="Data:" />
+      <DatePicker fx:id="dataRetirada" layoutX="100.0" layoutY="66.0" onAction="#onDataChange"/>
+      <Label layoutX="20.0" layoutY="110.0" text="Motorista:" />
+      <ChoiceBox fx:id="choiceUsuarios" layoutX="100.0" layoutY="106.0" prefWidth="300.0" />
+      <Label layoutX="20.0" layoutY="150.0" text="Veículo:" />
+      <ComboBox fx:id="comboVeiculos" layoutX="100.0" layoutY="146.0" prefWidth="300.0" />
+
+
+      <Button fx:id="btnConfirmar" text="Confirmar Retirada" layoutX="100.0" layoutY="200.0" onAction="#onConfirmarRetirada"/>
+      <Button fx:id="voltar" text="Voltar" layoutX="260.0" layoutY="200.0" onAction="#voltar"/>
    </children>
 </AnchorPane>

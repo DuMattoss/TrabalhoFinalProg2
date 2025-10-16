@@ -38,70 +38,56 @@ public class ControladorLogin {
         }
     }
 
+
     @FXML
     private void onEntrar() {
         String login  = value(campologin.getText());
         String senha  = value(camposenha.getText());
-        String codigo = operadorMode ? value(campocodigo.getText()) : null;
+        String codigo = operadorMode ? value(campocodigo.getText()) : "";
 
         if (login.isEmpty() || senha.isEmpty() || (operadorMode && codigo.isEmpty())) {
-            alerta(Alert.AlertType.WARNING, "Preencha todos os campos " + (operadorMode ? "(incluindo o código)" : "") + ".");
+            alerta(Alert.AlertType.WARNING,
+                    "Preencha todos os campos " + (operadorMode ? "(incluindo o código)" : "") + ".");
             return;
         }
 
         try {
-            Usuario usuario;
             if (operadorMode) {
-                // apenas verifica o código antes
-                if (!codigo.equals("1234")) {
-                    alerta(Alert.AlertType.ERROR, "Código de operador incorreto!");
+
+                var operador = serviçodeLogin.autenticarOperador(login, senha, codigo);
+                if (operador == null) {
+                    alerta(Alert.AlertType.ERROR, "Credenciais de operador inválidas.");
                     return;
                 }
-            }
 
-// chamada normal, com 2 parâmetros
-            boolean ok = serviçodeLogin.autenticar(login, senha);
-
-            if (ok) {
-                alerta(Alert.AlertType.INFORMATION, "Login realizado com sucesso!");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/carrosuenp/TelaRetiradas.fxml"));
-                Parent root = loader.load();
-
-                Stage stage = (Stage) entrar.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Retiradas");
-                stage.show();
+                abrirCenaNaMesmaJanela("/org/example/carrosuenp/TelaPrincipalOperador.fxml", "Operador");
             } else {
-                alerta(Alert.AlertType.ERROR, "Login ou senha incorretos!");
-            }
 
+                boolean ok = serviçodeLogin.autenticarUsuario(login, senha);
+                if (!ok) {
+                    alerta(Alert.AlertType.ERROR, "Login ou senha incorretos!");
+                    return;
+                }
+                abrirCenaNaMesmaJanela("/org/example/carrosuenp/TelaPrincipalUsuario.fxml", "Retiradas");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             alerta(Alert.AlertType.ERROR, "Erro ao autenticar: " + e.getMessage());
         }
     }
 
-    @FXML
-    private void onCadastrar() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/org/example/carrosuenp/TelaCadastroUsuario.fxml"));
-            Stage stage = (Stage) campologin.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Cadastro de Usuário");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            alerta(Alert.AlertType.ERROR, "Falha ao abrir tela de cadastro: " + e.getMessage());
-        }
+    private void abrirCenaNaMesmaJanela(String recurso, String titulo) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(recurso));
+        Parent root = loader.load();
+        Stage stage = (Stage) entrar.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle(titulo);
+        stage.show();
+        System.out.println("[Login] Abriu: " + recurso);
     }
 
-    // ===== util =====
+
     private String value(String s) { return s == null ? "" : s.trim(); }
-
-    private void fecharJanela() {
-        Stage stage = (Stage) campologin.getScene().getWindow();
-        stage.close();
-    }
 
     private void alerta(Alert.AlertType tipo, String msg) {
         Alert a = new Alert(tipo);

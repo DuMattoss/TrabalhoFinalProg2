@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorTelaPrincipalOperador"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <MenuBar prefHeight="25.0" prefWidth="600.0">
+            <menus>
+                <Menu>
+                    <graphic><Label fx:id="lblMenuRetirada" text="Retirada de Veículos" /></graphic>
+                </Menu>
+
+                <Menu>
+                    <graphic><Label fx:id="lblMenuCadMotoristas" text="Gerenciar Motoristas" /></graphic>
+                </Menu>
+                <Menu>
+                    <graphic>
+                        <Label fx:id="lblMenuCadastroVeiculos" text="Cadastro de Veículos" />
+                    </graphic>
+                </Menu>
+                <Menu>
+                    <graphic><Label fx:id="lblMenuCadVeiculos" text="Gerenciar Veículos" /></graphic>
+                </Menu>
+
+
+                <Menu>
+                    <graphic><Label fx:id="lblMenuUsuarios" text="Gerenciar Usuários" /></graphic>
+                </Menu>
+
+
+                <Menu>
+                    <graphic><Label fx:id="lblMenuCadUsuarios" text="Cadastro de Usuários" /></graphic>
+                </Menu>
+
+                <Menu>
+                    <graphic><Label fx:id="lblMenuOperadores" text="Cadastro de Operadores" /></graphic>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <center>
+        <AnchorPane fx:id="conteudoCentro"/>
+    </center>
+</BorderPane>

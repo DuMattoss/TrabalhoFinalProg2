@@ -9,4 +9,5 @@ module org.example.carrosuenp {
     opens org.example.carrosuenp to javafx.fxml;
     opens controladores to javafx.fxml;
     exports org.example.carrosuenp;
+    exports controladores;
 }

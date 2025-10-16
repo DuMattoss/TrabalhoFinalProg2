@@ -25,7 +25,7 @@ public class ControladorCadastroVeiculos {
         try {
             String marca  = campomarca.getText().trim();
             String modelo    = campomodelo.getText().trim();
-            String placa = campoplaca.getText().trim(); // <- STRING
+            String placa = campoplaca.getText().trim();
 
 
 

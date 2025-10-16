@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorGerenciarVeiculos"
+            prefHeight="420.0" prefWidth="820.0">
+    <children>
+        <VBox spacing="8" layoutX="14" layoutY="14" prefWidth="792">
+            <children>
+                <Label text="Gerenciar Veículos"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                <TableView fx:id="tabela" prefHeight="260">
+                    <columns>
+                        <TableColumn fx:id="colPlaca" text="Placa" prefWidth="160"/>
+                        <TableColumn fx:id="colModelo" text="Modelo" prefWidth="260"/>
+                        <TableColumn fx:id="colMarca" text="Marca" prefWidth="260"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="Placa:"/>
+                        <TextField fx:id="tfPlaca" prefWidth="140"/>
+                        <Label text="Modelo:"/>
+                        <TextField fx:id="tfModelo" prefWidth="180"/>
+                        <Label text="Marca:"/>
+                        <TextField fx:id="tfMarca" prefWidth="180"/>
+                        <Button text="Salvar alterações" onAction="#salvarAlteracoes"/>
+                    </children>
+                </HBox>
+
+                <HBox spacing="10">
+                    <children>
+                        <Button text="Remover selecionado" onAction="#removerSelecionado"/>
+                        <Button text="Atualizar" onAction="#atualizarTabela"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

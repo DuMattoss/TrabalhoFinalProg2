@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorTelaPrincipalUsuario"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <MenuBar prefHeight="25.0" prefWidth="600.0">
+            <menus>
+
+                <Menu fx:id="menuRetirada">
+                    <graphic>
+                        <Label fx:id="lblMenuRetirada" text="Retirada de Veículos" />
+                    </graphic>
+                </Menu>
+
+                <Menu fx:id="menuCadMotoristas">
+                    <graphic>
+                        <Label fx:id="lblMenuCadMotoristas" text="Cadastro de Motoristas" />
+                    </graphic>
+                </Menu>
+
+                <Menu fx:id="menuCadVeiculos">
+                    <graphic>
+                        <Label fx:id="lblMenuCadVeiculos" text="Cadastro de Veículos" />
+                    </graphic>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <!-- ÁREA CENTRAL -->
+    <center>
+        <AnchorPane fx:id="conteudoCentro"/>
+    </center>
+</BorderPane>

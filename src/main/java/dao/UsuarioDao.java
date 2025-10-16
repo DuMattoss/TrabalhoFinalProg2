@@ -2,9 +2,14 @@ package dao;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
 import org.bson.conversions.Bson;
 import org.example.carrosuenp.Usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
 public class UsuarioDao {
@@ -12,29 +17,45 @@ public class UsuarioDao {
 
     public UsuarioDao() {
         MongoDatabase db = MongoConn.db();
-
-        // ⚠️ coloque aqui o nome EXATO da coleção como aparece no Compass
-        // exemplo: "Usuario" ou "usuarios" — depende de como foi salva
         this.collection = db.getCollection("Usuarios", Usuario.class);
-
         System.out.println("[UsuarioDao] Banco: " + db.getName());
         System.out.println("[UsuarioDao] Coleção: " + collection.getNamespace().getCollectionName());
         System.out.println("[UsuarioDao] Total de documentos: " + collection.countDocuments());
     }
 
+
     public void salvar(Usuario usuario) {
         collection.insertOne(usuario);
     }
 
-    // Busca por login ignorando maiúsculas/minúsculas
+
     public Usuario buscarPorLogin(String login) {
         String quoted = java.util.regex.Pattern.quote(login);
-        Bson filtro = regex("login", "^" + quoted + "$", "i"); // 'i' = case-insensitive
+        Bson filtro = regex("login", "^" + quoted + "$", "i"); // case-insensitive
         Usuario u = collection.find(filtro).first();
 
         System.out.println("[UsuarioDao] buscarPorLogin('" + login + "') -> "
-                + (u == null ? "null" : "OK (achou '" + (u != null ? u.getLogin() : "N/A") + "')"));
-
+                + (u == null ? "null" : "OK (achou '" + u.getLogin() + "')"));
         return u;
+    }
+
+
+    public List<Usuario> listarTodos() {
+        return collection.find()
+                .sort(Sorts.ascending("nome"))
+                .into(new ArrayList<>());
+    }
+
+
+    public void atualizar(Usuario usuario) {
+        if (usuario == null || usuario.getLogin() == null) return;
+        collection.replaceOne(eq("login", usuario.getLogin()), usuario);
+    }
+
+
+    public void remover(String login) {
+        if (login == null) return;
+        collection.deleteOne(eq("login", login));
+        System.out.println("[UsuarioDao] Usuário removido: " + login);
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorGerenciarUsuarios"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label layoutX="210" layoutY="20" text="Gerenciar Usuários" />
+        <TableView fx:id="tabelaUsuarios" layoutX="50" layoutY="60" prefWidth="500" prefHeight="250">
+            <columns>
+                <TableColumn fx:id="colNome" text="Nome" prefWidth="150"/>
+                <TableColumn fx:id="colLogin" text="Login" prefWidth="150"/>
+                <TableColumn fx:id="colSenha" text="Senha" prefWidth="150"/>
+            </columns>
+        </TableView>
+        <Button text="Remover" layoutX="170" layoutY="330" onAction="#removerSelecionado"/>
+        <Button text="Atualizar" layoutX="330" layoutY="330" onAction="#atualizarTabela"/>
+    </children>
+</AnchorPane>

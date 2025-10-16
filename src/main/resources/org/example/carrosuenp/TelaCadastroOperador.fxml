@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorCadastroOperador"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label layoutX="220" layoutY="30" text="Cadastro de Operadores" />
+        <Label layoutX="130" layoutY="100" text="Nome:" />
+        <TextField fx:id="campoNome" layoutX="230" layoutY="95" prefWidth="220"/>
+
+        <Label layoutX="130" layoutY="140" text="Login:" />
+        <TextField fx:id="campoLogin" layoutX="230" layoutY="135" prefWidth="220"/>
+
+        <Label layoutX="130" layoutY="180" text="Senha:" />
+        <PasswordField fx:id="campoSenha" layoutX="230" layoutY="175" prefWidth="220"/>
+
+        <Label layoutX="130" layoutY="220" text="Código:" />
+        <TextField fx:id="campoCodigo" layoutX="230" layoutY="215" prefWidth="220"/>
+
+        <Button fx:id="btnSalvar" text="Salvar" layoutX="260" layoutY="270"
+                onAction="#salvarOperador"/>
+    </children>
+</AnchorPane>
