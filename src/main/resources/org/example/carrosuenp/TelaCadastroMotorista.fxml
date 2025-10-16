@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorCadastroMotorista">
+   <children>
+      <Label alignment="CENTER" layoutX="160.0" layoutY="39.0" prefHeight="23.0" prefWidth="281.0" text="Cadastro de Motoristas">
+         <font>
+            <Font name="Consolas" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="108.0" prefHeight="23.0" prefWidth="52.0" text="Nome">
+         <font>
+            <Font name="Consolas" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="140.0" prefHeight="23.0" prefWidth="52.0" text="CNH">
+         <font>
+            <Font name="Consolas" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="177.0" prefHeight="23.0" prefWidth="52.0" text="Codigo">
+         <font>
+            <Font name="Consolas" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="210.0" prefHeight="23.0" prefWidth="52.0" text="Setor">
+         <font>
+            <Font name="Consolas" size="15.0" />
+         </font>
+      </Label>
+      <TextField id="camponome" fx:id="camponome" layoutX="189.0" layoutY="107.0" promptText="Insira seu nome" />
+      <TextField id="campocnh" fx:id="campocnh" layoutX="189.0" layoutY="139.0" promptText="Insira o Nº de sua CNH" />
+      <TextField id="campocodigo" fx:id="campocodigo" layoutX="189.0" layoutY="176.0" promptText="Insira seu codigo" />
+      <TextField id="camposetor" fx:id="camposetor" layoutX="189.0" layoutY="209.0" promptText="Insira seu setor" />
+      <Button fx:id="salvarcadastromotorista" layoutX="277.0" layoutY="300.0" onAction="#salvarCadastroMotorista" text="Salvar" />
+
+   </children>
+</AnchorPane>
