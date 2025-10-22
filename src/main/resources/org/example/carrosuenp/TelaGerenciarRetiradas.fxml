@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.ControladorGerenciarRetiradas"
+            prefHeight="520.0" prefWidth="820.0">
+
+    <top>
+        <VBox spacing="8.0">
+            <padding><Insets top="12.0" right="12.0" bottom="12.0" left="12.0"/></padding>
+            <children>
+                <Label text="Gerenciar Retiradas">
+                    <font><Font name="Consolas Bold" size="20.0"/></font>
+                </Label>
+                <HBox spacing="8.0">
+                    <children>
+                        <Label text="Placa"/>
+                        <TextField fx:id="filtroPlaca" promptText="ABC1234" prefWidth="120.0"/>
+                        <Label text="De"/>
+                        <DatePicker fx:id="filtroInicio" />
+                        <Label text="Até"/>
+                        <DatePicker fx:id="filtroFim" />
+                        <Button text="Recarregar" onAction="#onRecarregar"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tabela" prefHeight="360.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colPlaca" text="Placa" prefWidth="140.0"/>
+                <TableColumn fx:id="colRetirada" text="Retirada" prefWidth="160.0"/>
+                <TableColumn fx:id="colDevolucao" text="Devolução" prefWidth="160.0"/>
+                <TableColumn fx:id="colProcessado" text="Processado" prefWidth="120.0"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <VBox spacing="10.0">
+            <padding><Insets top="12.0" right="12.0" bottom="12.0" left="12.0"/></padding>
+            <children>
+                <HBox spacing="10.0">
+                    <children>
+                        <Label text="Nova devolução"/>
+                        <DatePicker fx:id="novaDevolucao" />
+                        <Button text="Estender/Alterar" onAction="#onAlterarDevolucao"/>
+                    </children>
+                </HBox>
+                <HBox spacing="10.0">
+                    <children>
+                        <Label text="Trocar veículo para"/>
+                        <ComboBox fx:id="comboNovoVeiculo" prefWidth="280.0"/>
+                        <Button text="Trocar Veículo" onAction="#onTrocarVeiculo"/>
+                        <Button text="Cancelar" onAction="#onCancelar"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom>
+</BorderPane>

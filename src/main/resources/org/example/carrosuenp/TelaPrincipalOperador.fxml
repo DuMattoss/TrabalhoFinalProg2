@@ -30,11 +30,9 @@
                     <graphic><Label fx:id="lblMenuCadVeiculos" text="Gerenciar Veículos" /></graphic>
                 </Menu>
 
-
                 <Menu>
                     <graphic><Label fx:id="lblMenuUsuarios" text="Gerenciar Usuários" /></graphic>
                 </Menu>
-
 
                 <Menu>
                     <graphic><Label fx:id="lblMenuCadUsuarios" text="Cadastro de Usuários" /></graphic>
@@ -42,6 +40,11 @@
 
                 <Menu>
                     <graphic><Label fx:id="lblMenuOperadores" text="Cadastro de Operadores" /></graphic>
+                </Menu>
+
+                <!-- NOVO MENU -->
+                <Menu>
+                    <graphic><Label fx:id="lblMenuGerenciarRetiradas" text="Gerenciar Retiradas" /></graphic>
                 </Menu>
             </menus>
         </MenuBar>
