@@ -8,11 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controladores.ControladorRetirada">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorRetirada">
 
    <children>
       <Label layoutX="190.0" layoutY="40.0" text="Retirada de veículos">
@@ -23,28 +19,28 @@
       <Label layoutX="68.0" layoutY="102.0" text="Motorista">
          <font><Font name="Consolas" size="16.0" /></font>
       </Label>
-      <ChoiceBox fx:id="choiceUsuarios" layoutX="214.0" layoutY="99.0" prefHeight="25.0" prefWidth="250.0" />
+      <ChoiceBox fx:id="choiceUsuarios" layoutX="300.0" layoutY="102.0" prefHeight="25.0" prefWidth="250.0" />
 
       <!-- Data Retirada -->
       <Label layoutX="68.0" layoutY="146.0" text="Data de Retirada">
          <font><Font name="Consolas" size="16.0" /></font>
       </Label>
-      <DatePicker fx:id="dataRetirada" layoutX="214.0" layoutY="143.0" prefWidth="180.0" />
+      <DatePicker fx:id="dataRetirada" layoutX="300.0" layoutY="146.0" prefWidth="180.0" />
 
       <!-- Data Devolução (NOVO) -->
       <Label layoutX="68.0" layoutY="188.0" text="Data de Devolução">
          <font><Font name="Consolas" size="16.0" /></font>
       </Label>
-      <DatePicker fx:id="dataDevolucao" layoutX="214.0" layoutY="185.0" prefWidth="180.0" />
+      <DatePicker fx:id="dataDevolucao" layoutX="300.0" layoutY="188.0" prefWidth="180.0" />
 
       <!-- Veículo -->
       <Label layoutX="68.0" layoutY="229.0" text="Veículo disponível">
          <font><Font name="Consolas" size="16.0" /></font>
       </Label>
-      <ComboBox fx:id="comboVeiculos" layoutX="214.0" layoutY="226.0" prefHeight="25.0" prefWidth="250.0" />
+      <ComboBox fx:id="comboVeiculos" layoutX="300.0" layoutY="229.0" prefHeight="25.0" prefWidth="250.0" />
 
       <!-- Botões -->
       <Button fx:id="voltar" layoutX="111.0" layoutY="302.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
-      <Button layoutX="385.0" layoutY="302.0" mnemonicParsing="false" text="Retirar" onAction="#onConfirmarRetirada"/>
+      <Button layoutX="385.0" layoutY="302.0" mnemonicParsing="false" onAction="#onConfirmarRetirada" text="Retirar" />
    </children>
 </AnchorPane>

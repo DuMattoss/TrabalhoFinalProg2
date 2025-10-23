@@ -6,10 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controladores.ControladorTelaPrincipalOperador"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTelaPrincipalOperador">
 
     <top>
         <MenuBar prefHeight="25.0" prefWidth="600.0">
@@ -19,7 +16,10 @@
                 </Menu>
 
                 <Menu>
-                    <graphic><Label fx:id="lblMenuCadMotoristas" text="Gerenciar Motoristas" /></graphic>
+                    <graphic><Label fx:id="lblMenuGerMotoristas" text="Gerenciar Motoristas" /></graphic>
+                </Menu>
+                <Menu>
+                    <graphic><Label fx:id="lblMenuCadMotoristas" text="Cadastrar Motoristas" /></graphic>
                 </Menu>
                 <Menu>
                     <graphic>
@@ -41,8 +41,6 @@
                 <Menu>
                     <graphic><Label fx:id="lblMenuOperadores" text="Cadastro de Operadores" /></graphic>
                 </Menu>
-
-                <!-- NOVO MENU -->
                 <Menu>
                     <graphic><Label fx:id="lblMenuGerenciarRetiradas" text="Gerenciar Retiradas" /></graphic>
                 </Menu>
@@ -51,6 +49,6 @@
     </top>
 
     <center>
-        <AnchorPane fx:id="conteudoCentro"/>
+        <AnchorPane fx:id="conteudoCentro" prefHeight="536.0" prefWidth="881.0" />
     </center>
 </BorderPane>

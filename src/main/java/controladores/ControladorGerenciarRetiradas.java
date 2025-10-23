@@ -21,6 +21,7 @@ public class ControladorGerenciarRetiradas {
     @FXML private DatePicker filtroFim;
     @FXML private TableView<AgendamentoRetirada> tabela;
     @FXML private TableColumn<AgendamentoRetirada, String> colPlaca;
+    @FXML private TableColumn<AgendamentoRetirada, String> colMotorista;
     @FXML private TableColumn<AgendamentoRetirada, String> colRetirada;
     @FXML private TableColumn<AgendamentoRetirada, String> colDevolucao;
     @FXML private TableColumn<AgendamentoRetirada, Boolean> colProcessado;
@@ -35,9 +36,18 @@ public class ControladorGerenciarRetiradas {
 
     @FXML
     public void initialize() {
-        colPlaca.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nz(c.getValue().getPlaca())));
-        colRetirada.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nz(c.getValue().getDataRetirada() != null ? c.getValue().getDataRetirada() : c.getValue().getData())));
-        colDevolucao.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(nz(c.getValue().getDataDevolucao() != null ? c.getValue().getDataDevolucao() : c.getValue().getData())));
+        colPlaca.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getVeiculo() != null ? nz(c.getValue().getVeiculo().getPlaca()) : ""
+        ));
+        colMotorista.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getMotorista() != null ? nz(c.getValue().getMotorista().getNome()) : ""
+        ));
+        colRetirada.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                nz(c.getValue().getDataRetirada() != null ? c.getValue().getDataRetirada() : "")
+        ));
+        colDevolucao.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                nz(c.getValue().getDataDevolucao() != null ? c.getValue().getDataDevolucao() : "")
+        ));
         colProcessado.setCellValueFactory(c -> new javafx.beans.property.SimpleBooleanProperty(c.getValue().isProcessado()));
         colProcessado.setCellFactory(tc -> new TableCell<>() {
             @Override protected void updateItem(Boolean b, boolean empty) {
@@ -74,7 +84,10 @@ public class ControladorGerenciarRetiradas {
         if (fim.isBefore(ini)) fim = ini;
         List<AgendamentoRetirada> base = agDao.listarPeriodo(ini.toString(), fim.toString());
         if (!placa.isBlank()) {
-            base = base.stream().filter(a -> placa.equalsIgnoreCase(nz(a.getPlaca()))).collect(Collectors.toList());
+            base = base.stream()
+                    .filter(a -> a.getVeiculo() != null &&
+                            placa.equalsIgnoreCase(nz(a.getVeiculo().getPlaca())))
+                    .collect(Collectors.toList());
         }
         itens.setAll(base);
         tabela.getSelectionModel().clearSelection();
@@ -93,18 +106,18 @@ public class ControladorGerenciarRetiradas {
             info("Informe a nova data de devolução.");
             return;
         }
-        String retOld = nz(sel.getDataRetirada() != null ? sel.getDataRetirada() : sel.getData());
-        String devOld = nz(sel.getDataDevolucao() != null ? sel.getDataDevolucao() : sel.getData());
+        String retOld = nz(sel.getDataRetirada());
+        String devOld = nz(sel.getDataDevolucao());
         String devNova = novaDevolucao.getValue().toString();
         if (devNova.compareTo(retOld) < 0) {
             info("A devolução não pode ser anterior à retirada.");
             return;
         }
-        if (agDao.existeConflitoReserva(sel.getPlaca(), retOld, devNova)) {
+        if (agDao.existeConflitoReserva(sel.getVeiculo().getPlaca(), retOld, devNova)) {
             info("Conflito de reserva para o período.");
             return;
         }
-        long m = agDao.atualizarPeriodo(sel.getPlaca(), retOld, devOld, retOld, devNova);
+        long m = agDao.atualizarPeriodo(sel.getVeiculo().getPlaca(), retOld, devOld, retOld, devNova);
         if (m == 0) {
             erro("Nenhum registro alterado.");
             return;
@@ -125,13 +138,13 @@ public class ControladorGerenciarRetiradas {
             info("Selecione o novo veículo.");
             return;
         }
-        String ret = nz(sel.getDataRetirada() != null ? sel.getDataRetirada() : sel.getData());
-        String dev = nz(sel.getDataDevolucao() != null ? sel.getDataDevolucao() : sel.getData());
+        String ret = nz(sel.getDataRetirada());
+        String dev = nz(sel.getDataDevolucao());
         if (agDao.existeConflitoReserva(novo.getPlaca(), ret, dev)) {
             info("O veículo selecionado está indisponível para o período.");
             return;
         }
-        long m = agDao.atualizarPlaca(sel.getPlaca(), ret, dev, novo.getPlaca());
+        long m = agDao.atualizarPlaca(sel.getVeiculo().getPlaca(), ret, dev, novo.getPlaca());
         if (m == 0) {
             erro("Nenhum registro alterado.");
             return;
@@ -147,9 +160,9 @@ public class ControladorGerenciarRetiradas {
             info("Selecione uma retirada.");
             return;
         }
-        String ret = nz(sel.getDataRetirada() != null ? sel.getDataRetirada() : sel.getData());
-        String dev = nz(sel.getDataDevolucao() != null ? sel.getDataDevolucao() : sel.getData());
-        long m = agDao.remover(sel.getPlaca(), ret, dev);
+        String ret = nz(sel.getDataRetirada());
+        String dev = nz(sel.getDataDevolucao());
+        long m = agDao.remover(sel.getVeiculo().getPlaca(), ret, dev);
         if (m == 0) {
             erro("Nenhum registro removido.");
             return;

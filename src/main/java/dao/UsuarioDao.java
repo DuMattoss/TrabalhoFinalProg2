@@ -47,12 +47,6 @@ public class UsuarioDao {
     }
 
 
-    public void atualizar(Usuario usuario) {
-        if (usuario == null || usuario.getLogin() == null) return;
-        collection.replaceOne(eq("login", usuario.getLogin()), usuario);
-    }
-
-
     public void remover(String login) {
         if (login == null) return;
         collection.deleteOne(eq("login", login));

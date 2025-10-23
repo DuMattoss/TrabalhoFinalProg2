@@ -77,19 +77,6 @@ public class ControladorGerenciarOperadores {
         atualizarTabela();
     }
 
-    @FXML
-    public void removerSelecionado() {
-        Operador sel = tabela.getSelectionModel().getSelectedItem();
-        if (sel == null) {
-            alerta("Selecione um operador na tabela.");
-            return;
-        }
-
-        operadorDao.remover(sel.getLogin());
-        alerta("Operador removido.");
-        atualizarTabela();
-    }
-
     private void alerta(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);

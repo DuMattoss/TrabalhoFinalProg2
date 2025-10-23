@@ -135,7 +135,7 @@ public class ControladorRetirada {
         try {
             List<AgendamentoRetirada> conflitos = agDao.listarConflitantes(sIni, sFim);
             placasIndisponiveis = conflitos.stream()
-                    .map(AgendamentoRetirada::getPlaca)
+                    .map(a -> a.getVeiculo() != null ? a.getVeiculo().getPlaca() : "")
                     .map(this::nz)
                     .collect(Collectors.toSet());
             comboVeiculos.setItems(null);
@@ -153,11 +153,6 @@ public class ControladorRetirada {
         String modelo = nz(v.getModelo());
         String base = (placa.isBlank() ? "" : placa + " - ") + (marca + " " + modelo).trim();
         return indisponivel ? base + " (indisponível)" : base;
-    }
-
-    @FXML
-    private void onDataChange() {
-        refreshDisponibilidade();
     }
 
     @FXML
@@ -187,12 +182,11 @@ public class ControladorRetirada {
                 alertaAtencao("Atenção", "A data de devolução não pode ser anterior à retirada.");
                 return;
             }
-            String placa = v.getPlaca();
-            if (agDao.existeConflitoReserva(placa, ini, fim)) {
+            if (agDao.existeConflitoReserva(v.getPlaca(), ini, fim)) {
                 alertaAtencao("Conflito", "Já existe reserva para este veículo que conflita com o período selecionado.");
                 return;
             }
-            AgendamentoRetirada novo = new AgendamentoRetirada(placa, ini, fim, false);
+            AgendamentoRetirada novo = new AgendamentoRetirada(v, m, ini, fim, false);
             agDao.inserir(novo);
             alertaInfo("Sucesso", "Reserva confirmada de " + ini + " até " + fim + " (" + formatVeiculo(v, false) + ").");
             refreshDisponibilidade();
@@ -246,14 +240,6 @@ public class ControladorRetirada {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
-        a.showAndWait();
-    }
-
-    private void alertaErro(String titulo, String mensagem) {
-        Alert a = new Alert(Alert.AlertType.ERROR);
-        a.setTitle(titulo);
-        a.setHeaderText(null);
-        a.setContentText(mensagem);
         a.showAndWait();
     }
 }

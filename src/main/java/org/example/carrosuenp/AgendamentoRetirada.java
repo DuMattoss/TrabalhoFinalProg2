@@ -1,46 +1,29 @@
 package org.example.carrosuenp;
 
-/**
- * POJO para a coleção "AgendamentosRetirada".
- * Compatível com registros antigos (campo "data") e novos (dataRetirada/dataDevolucao).
- */
 public class AgendamentoRetirada {
-    private String placa;
 
-    // NOVOS CAMPOS
-    private String dataRetirada;   // "YYYY-MM-DD"
-    private String dataDevolucao;  // "YYYY-MM-DD"
+    private Veiculo veiculo;
+    private Motorista motorista;
 
-    // LEGADO: ainda existe em docs antigos; manter getter/setter para o codec
-    private String data;
-
+    private String dataRetirada;
+    private String dataDevolucao;
     private boolean processado;
 
     public AgendamentoRetirada() {}
 
-    /** Construtor novo (recomendado) */
-    public AgendamentoRetirada(String placa, String dataRetirada, String dataDevolucao, boolean processado) {
-        this.placa = placa;
+    public AgendamentoRetirada(Veiculo veiculo, Motorista motorista, String dataRetirada, String dataDevolucao, boolean processado) {
+        this.veiculo = veiculo;
+        this.motorista = motorista;
         this.dataRetirada = dataRetirada;
         this.dataDevolucao = dataDevolucao;
         this.processado = processado;
-
-        // Para compatibilidade eventual, podemos setar "data" igual à dataRetirada
-        this.data = dataRetirada;
     }
 
-    /** Construtor antigo (compatibilidade) -> devolução = retirada */
-    public AgendamentoRetirada(String placa, String data, boolean processado) {
-        this.placa = placa;
-        this.data = data;
-        this.dataRetirada = data;
-        this.dataDevolucao = data;
-        this.processado = processado;
-    }
+    public Veiculo getVeiculo() { return veiculo; }
+    public void setVeiculo(Veiculo veiculo) { this.veiculo = veiculo; }
 
-    // Getters/Setters
-    public String getPlaca() { return placa; }
-    public void setPlaca(String placa) { this.placa = placa; }
+    public Motorista getMotorista() { return motorista; }
+    public void setMotorista(Motorista motorista) { this.motorista = motorista; }
 
     public String getDataRetirada() { return dataRetirada; }
     public void setDataRetirada(String dataRetirada) { this.dataRetirada = dataRetirada; }
@@ -48,22 +31,16 @@ public class AgendamentoRetirada {
     public String getDataDevolucao() { return dataDevolucao; }
     public void setDataDevolucao(String dataDevolucao) { this.dataDevolucao = dataDevolucao; }
 
-    // LEGADO: manter para docs antigos
-    public String getData() { return data; }
-    public void setData(String data) {
-        this.data = data;
-        // se preencher o legado, mantenha os novos coerentes
-        if (this.dataRetirada == null) this.dataRetirada = data;
-        if (this.dataDevolucao == null) this.dataDevolucao = data;
-    }
-
     public boolean isProcessado() { return processado; }
     public void setProcessado(boolean processado) { this.processado = processado; }
 
     @Override
     public String toString() {
+        String placa = (veiculo != null) ? veiculo.getPlaca() : "(sem veículo)";
+        String nome = (motorista != null) ? motorista.getNome() : "(sem motorista)";
         return "AgendamentoRetirada{" +
-                "placa='" + placa + '\'' +
+                "veiculo=" + placa +
+                ", motorista=" + nome +
                 ", dataRetirada='" + dataRetirada + '\'' +
                 ", dataDevolucao='" + dataDevolucao + '\'' +
                 ", processado=" + processado +

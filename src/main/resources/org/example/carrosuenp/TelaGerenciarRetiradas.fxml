@@ -36,6 +36,7 @@
         <TableView fx:id="tabela" prefHeight="360.0" prefWidth="800.0">
             <columns>
                 <TableColumn fx:id="colPlaca" text="Placa" prefWidth="140.0"/>
+                <TableColumn fx:id="colMotorista" text="Motorista" prefWidth="220.0"/>
                 <TableColumn fx:id="colRetirada" text="Retirada" prefWidth="160.0"/>
                 <TableColumn fx:id="colDevolucao" text="Devolução" prefWidth="160.0"/>
                 <TableColumn fx:id="colProcessado" text="Processado" prefWidth="120.0"/>

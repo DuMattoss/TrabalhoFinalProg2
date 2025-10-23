@@ -18,11 +18,13 @@ public class ControladorTelaPrincipalOperador {
     @FXML private Label lblMenuOperadores;
     @FXML private Label lblMenuGerenciarRetiradas;
     @FXML private AnchorPane conteudoCentro;
+    @FXML private Label lblMenuGerMotoristas;
 
     @FXML
     public void initialize() {
         lblMenuRetirada.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaRetiradas.fxml"));
-        lblMenuCadMotoristas.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaGerenciarMotoristas.fxml"));
+        lblMenuGerMotoristas.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaGerenciarMotoristas.fxml"));
+        lblMenuCadMotoristas.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaCadastroMotorista.fxml"));
         lblMenuCadVeiculos.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaGerenciarVeiculos.fxml"));
         lblMenuCadastroVeiculos.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaCadastroVeiculos.fxml"));
         lblMenuUsuarios.setOnMouseClicked(e -> abrirTela("/org/example/carrosuenp/TelaGerenciarUsuarios.fxml"));
